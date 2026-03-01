@@ -1,0 +1,246 @@
+.page {
+  height: calc(100vh - 3rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+}
+
+.layout {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.newBtn {
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+
+.newBtn:hover {
+  background: var(--accent-hover);
+}
+
+.noteList {
+  list-style: none;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.noteList li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.noteList li:last-child {
+  border-bottom: none;
+}
+
+.noteList li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.noteList li.noteActive {
+  background: rgba(167, 139, 250, 0.15);
+  color: var(--accent);
+}
+
+.editorArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.toolbar {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.titleInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.saveBtn {
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.genBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.genBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.viewSavedBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.viewSavedBtn:hover {
+  background: rgba(167, 139, 250, 0.1);
+}
+
+.delBtn {
+  padding: 0.5rem 0.75rem;
+  color: var(--danger);
+  border-radius: 8px;
+}
+
+.delBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.editor {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.editorProse {
+  min-height: 200px;
+  outline: none;
+}
+
+.editorProse p {
+  margin-bottom: 0.5rem;
+}
+
+.editorProse ul,
+.editorProse ol {
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.flashcardView {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.backBtn {
+  align-self: flex-start;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.cardStack {
+  width: 100%;
+  max-width: 480px;
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.cardLabel {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.cardQ {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.cardA {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.cardNav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cardNav button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.cardNav button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cardNav span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}

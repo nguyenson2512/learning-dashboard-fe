@@ -1,0 +1,70 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: cimg/node:20.0
+    resource_class: medium
+
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "package-lock.json" }}
+            - deps-
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run tests
+          command: npm test || true
+
+  docker-build-push:
+    executor: default
+    parameters:
+      service:
+        type: string
+      context_dir:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Configure AWS CLI
+          command: |
+            mkdir -p ~/.aws
+            echo "[default]" > ~/.aws/config
+            echo "region = $AWS_REGION" >> ~/.aws/config
+            echo "[default]" > ~/.aws/credentials
+            echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - run:
+          name: Build and push image
+          command: |
+            SERVICE=<< parameters.service >>
+            CTX=<< parameters.context_dir >>
+            if [ -z "$CTX" ]; then CTX=$SERVICE; fi
+            REPO=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/learning-dashboard/$SERVICE
+            docker build -t $REPO:$CIRCLE_SHA1 -t $REPO:latest -f $CTX/Dockerfile $CTX
+            docker push $REPO:$CIRCLE_SHA1
+            docker push $REPO:latest
+
+workflows:
+  version: 2
+  build-and-push:
+    jobs:
+      - build
+      - docker-build-push:
+          requires: [build]
+          service: frontend
+          context_dir: .
+          context: aws-creds

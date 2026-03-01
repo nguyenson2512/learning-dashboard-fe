@@ -1,0 +1,20 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# local env files
+.env
+
+# logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# lock files (already tracked maybe)
+# npm-debug file
+npm-debug.log*
